@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "name": "sentitweet",
+  "version": "1.0.0",
+  "description": "An example of grabbing sentiments from tweets",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emkay/sentitweet.git"
+  },
+  "keywords": [
+    "sentiment",
+    "tweet"
+  ],
+  "author": "Michael Matuzak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emkay/sentitweet/issues"
+  },
+  "homepage": "https://github.com/emkay/sentitweet",
+  "dependencies": {
+    "cuid": "^1.2.5",
+    "dotenv": "^1.1.0",
+    "level": "^1.1.0",
+    "level-ws": "0.0.0",
+    "sentiment": "^1.0.2",
+    "twitter": "^1.2.5"
+  },
+  "devDependencies": {
+    "standard": "^4.2.1"
+  }
+}
