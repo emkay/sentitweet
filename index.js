@@ -1,39 +1,19 @@
-require('dotenv').load();
+require('dotenv').load()
 
-var Twitter = require('twitter')
-var sentiment = require('sentiment')
-var cuid = require('cuid')
-var level = require('level')
-var levelWs = require('level-ws')
-var db = levelWs(level('./sentiment-db'))
-var ws = db.createWriteStream()
+const PORT = process.env.PORT || 8080
+const HOST = process.env.HOST || '127.0.0.1'
+const GATHER = process.env.GATHER || false
 
-var client = new Twitter({
-  consumer_key: process.env.CONSUMER_KEY,
-  consumer_secret: process.env.CONSUMER_SECRET,
-  access_token_key: process.env.ACCESS_TOKEN_KEY,
-  access_token_secret: process.env.ACCESS_TOKEN_SECRET
-})
+var server = require('./server')
+var gather = require('./gather')
 
-ws.on('error', function (err) {
-  console.error('Error:', err)
-})
-ws.on('close', function () {
-  console.log('Stream closed')
-})
+server.listen(PORT, HOST, function (err) {
+  if (err) {
+    throw err
+  }
 
-client.stream('statuses/sample', function (s) {
-  s.on('data', function (tweet) {
-    var text = tweet && tweet.lang === 'en' && tweet.text
-    var results = text && sentiment(text)
-
-    if (results) {
-      console.log(results)
-      ws.write({ key: cuid(), value: JSON.stringify(results)})
-    }
-  })
-
-  s.on('error', function (error) {
-    console.log(error)
-  })
+  if (GATHER) {
+    gather()
+  }
+  console.log('listening at ', HOST, PORT)
 })

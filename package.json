@@ -5,6 +5,8 @@
   "description": "An example of grabbing sentiments from tweets",
   "main": "index.js",
   "scripts": {
+    "build": "browserify browser/index.js > static/bundle.js",
+    "start": "npm run build && node index.js",
     "test": "standard"
   },
   "repository": {
@@ -27,9 +29,11 @@
     "level": "^1.1.0",
     "level-ws": "0.0.0",
     "sentiment": "^1.0.2",
+    "st": "^0.5.4",
     "twitter": "^1.2.5"
   },
   "devDependencies": {
+    "browserify": "^10.2.4",
     "standard": "^4.2.1"
   }
 }
