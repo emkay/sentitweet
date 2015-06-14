@@ -24,14 +24,17 @@
   },
   "homepage": "https://github.com/emkay/sentitweet",
   "dependencies": {
+    "chart.js": "^1.0.2",
     "cuid": "^1.2.5",
+    "domready": "^1.0.8",
     "dotenv": "^1.1.0",
     "level": "^1.1.0",
     "level-ws": "0.0.0",
-    "response": "^0.14.0",
     "routes": "^2.0.0",
     "sentiment": "^1.0.2",
+    "shoe": "0.0.15",
     "st": "^0.5.4",
+    "through": "^2.3.7",
     "twitter": "^1.2.5"
   },
   "devDependencies": {

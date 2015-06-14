@@ -1,32 +1,30 @@
 const url = require('url')
 const http = require('http')
-const response = require('response')
 const st = require('st')
 const mount = st({
   path: __dirname + '/static',
   url: '/static'
 })
 
+const shoe = require('shoe')
+
 var dbUtils = require('./db-utils')
 
 var router = require('routes')()
 
-router.addRoute('/data/', function (req, res, match) {
+var sock = shoe(function (stream) {
   var ds = dbUtils.valueStream()
-  var total = []
-
   ds.on('data', function (data) {
-    var results = JSON.parse(data)
-    total.push(results)
+    stream.write(data)
   })
 
   ds.on('end', function () {
-    response.json(total).pipe(res)
+
   })
 })
 
 router.addRoute('/', function (req, res, match) {
-  res.end('<!doctype html><html><body><script src="/static/bundle.js"></script></body></html>')
+  res.end('<!doctype html><html><body><div id="results"></div><script src="/static/bundle.js"></script></body></html>')
 })
 
 function onRequest (req, res) {
@@ -47,4 +45,5 @@ function onRequest (req, res) {
 }
 
 var server = http.createServer(onRequest)
+sock.install(server, '/data')
 module.exports = server
