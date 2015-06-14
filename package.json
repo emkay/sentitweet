@@ -28,6 +28,8 @@
     "dotenv": "^1.1.0",
     "level": "^1.1.0",
     "level-ws": "0.0.0",
+    "response": "^0.14.0",
+    "routes": "^2.0.0",
     "sentiment": "^1.0.2",
     "st": "^0.5.4",
     "twitter": "^1.2.5"

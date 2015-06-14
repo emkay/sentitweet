@@ -7,6 +7,8 @@ const level = require('level')
 const levelWs = require('level-ws')
 const tracking = require('./tracking')
 
+const GATHER = process.env.GATHER || false
+
 var db = levelWs(level('./sentiment-db'))
 
 function gather () {
@@ -47,7 +49,10 @@ function valueStream () {
   return db.createValueStream()
 }
 
+if (GATHER) {
+  gather()
+}
+
 module.exports = {
-  gather: gather,
   valueStream: valueStream
 }
