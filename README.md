@@ -11,10 +11,7 @@ This grabs tweets based on a hash tag and will do sentiment analysis. That data 
 
 ```
 git clone https://github.com/emkay/sentitweet.git
-
 cd sentitweet
-
 npm i
-
 npm start
 ```
