@@ -10,5 +10,5 @@ server.listen(PORT, HOST, function (err) {
     throw err
   }
 
-  console.log('listening at ', HOST, PORT)
+  console.log('listening at', [HOST, PORT].join(':'))
 })

@@ -16,7 +16,7 @@ domready(function () {
 
   body.style.backgroundColor = 'rgb(50, 50, 50)'
   value(function onchange (v) {
-    var c = v * 5
+    var c = v * 3
     if (c > 0) {
       if (green + c > 255) {
         green = 255

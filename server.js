@@ -8,7 +8,7 @@ const mount = st({
 
 const shoe = require('shoe')
 
-var gather = require('./db-utils')
+var gather = require('./gather')
 
 var router = require('routes')()
 
