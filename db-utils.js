@@ -2,18 +2,9 @@ require('dotenv').load()
 
 const Twitter = require('twitter')
 const sentiment = require('sentiment')
-const cuid = require('cuid')
-const level = require('level')
-const levelWs = require('level-ws')
 const tracking = require('./tracking')
 
-const GATHER = process.env.GATHER || false
-
-var db = levelWs(level('./sentiment-db'))
-
-function gather () {
-  var ws = db.createWriteStream()
-
+function gather (stream) {
   var client = new Twitter({
     consumer_key: process.env.CONSUMER_KEY,
     consumer_secret: process.env.CONSUMER_SECRET,
@@ -21,21 +12,14 @@ function gather () {
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
   })
 
-  ws.on('error', function (err) {
-    console.error('Error:', err)
-  })
-  ws.on('close', function () {
-    console.log('Stream closed')
-  })
-
   client.stream('statuses/filter', {track: tracking.join(',')}, function (s) {
     s.on('data', function (tweet) {
       var text = tweet && tweet.lang === 'en' && tweet.text
       var results = text && sentiment(text)
+      var score = results && results.score
 
-      if (results) {
-        console.log(results)
-        ws.write({ key: cuid(), value: JSON.stringify(results)})
+      if (score) {
+        stream.write(score)
       }
     })
 
@@ -45,14 +29,4 @@ function gather () {
   })
 }
 
-function valueStream () {
-  return db.createValueStream()
-}
-
-if (GATHER) {
-  gather()
-}
-
-module.exports = {
-  valueStream: valueStream
-}
+module.exports = gather

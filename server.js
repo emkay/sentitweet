@@ -8,23 +8,14 @@ const mount = st({
 
 const shoe = require('shoe')
 
-var dbUtils = require('./db-utils')
+var gather = require('./db-utils')
 
 var router = require('routes')()
 
-var sock = shoe(function (stream) {
-  var ds = dbUtils.valueStream()
-  ds.on('data', function (data) {
-    stream.write(data)
-  })
-
-  ds.on('end', function () {
-
-  })
-})
+var sock = shoe(gather)
 
 router.addRoute('/', function (req, res, match) {
-  res.end('<!doctype html><html><body><div id="results"></div><script src="/static/bundle.js"></script></body></html>')
+  res.end('<!doctype html><html><body style="width: 100%; height: 100%;"><script src="/static/bundle.js"></script></body></html>')
 })
 
 function onRequest (req, res) {
