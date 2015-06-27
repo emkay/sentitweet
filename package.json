@@ -5,7 +5,7 @@
   "description": "An example of grabbing sentiments from tweets",
   "main": "index.js",
   "scripts": {
-    "build": "browserify browser/index.js > static/bundle.js",
+    "build": "mkdir -p static && browserify browser/index.js > static/bundle.js",
     "start": "npm run build && node index.js",
     "test": "standard"
   },
